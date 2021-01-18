@@ -74,3 +74,8 @@ def load_data(dir_path: Path) -> list[Weibo]:
         data.append(Weibo(id, weibo_time, total_comment, comments))
 
     return sorted(data, key=lambda w: w.id)
+
+
+def load_stopwords(path=Path('data/baidu_stopwords.txt')) -> set[str]:
+    with open(path) as file:
+        return set([line.strip() for line in file])

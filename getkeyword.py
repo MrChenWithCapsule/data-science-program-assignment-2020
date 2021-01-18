@@ -3,7 +3,7 @@ from pathlib import Path
 from pprint import pprint
 from time import strftime
 from functools import reduce
-from common import load_data, Weibo
+from common import load_data, Weibo, load_stopwords
 
 
 def filter_toolate(data: list[Weibo]):
@@ -28,10 +28,7 @@ def get_keyword(data: list[Weibo], stopwords=set()) -> list[list[str]]:
     return weibo_keywd
 
 
-sw = set()
-with open('data/baidu_stopwords.txt') as file:
-    sw = set([line.strip() for line in file])
-
+sw = load_stopwords()
 data = load_data(Path('./data/FilterData'))
 data = filter_toolate(data)
 result = get_keyword(data, sw)
