@@ -20,7 +20,8 @@ class Weibo(NamedTuple):
     comments: list[Comment]
 
 
-def load_csv(csv_path: Path) -> list[Comment]:
+def load_csv(csv_path: Path, begin: struct_time,
+             end: struct_time) -> list[Comment]:
     comments = []
     with csv_path.open() as csvfile:
         reader = csv.reader(csvfile)
@@ -31,17 +32,24 @@ def load_csv(csv_path: Path) -> list[Comment]:
             try:
                 comment_time = strptime(row[0], "%Y-%m-%d %H:%M")
             except ValueError:
-                comment_time = strptime('2020 '+row[0], '%Y %m月%d日 %H:%M')
-            words = list(jieba.cut(row[1][row[1].find('：')+1:].strip()))
+                comment_time = strptime('2020 ' + row[0], '%Y %m月%d日 %H:%M')
+            if not begin < comment_time < end:
+                continue
+            words = list(jieba.cut(row[1][row[1].find('：') + 1:].strip()))
             if not len(words) == 0:
                 comments.append(Comment(comment_time, words))
 
     return comments
 
 
-def load_csvdata(dir_path: Path) -> list[Comment]:
-    comments_file = map(lambda p: load_csv(p), dir_path.glob('*.csv'))
-    return list(reduce(lambda x, y: x+y, comments_file))
+def load_csvdata(
+    dir_path: Path,
+    begin: struct_time = strptime('2019 01 01', '%Y %m %d'),
+    end: struct_time = strptime('2021 01 01', '%Y %m %d')
+) -> list[Comment]:
+    comments_file = map(lambda p: load_csv(p, begin, end),
+                        dir_path.glob('*.csv'))
+    return list(reduce(lambda x, y: x + y, comments_file))
 
 
 def load_data(dir_path: Path) -> list[Weibo]:
@@ -50,8 +58,8 @@ def load_data(dir_path: Path) -> list[Weibo]:
     files = dir_path.glob('*.json')
     ids = map(lambda p: p.name[:p.name.rfind('.')], files)
     for id in ids:
-        json_path = dir_path/(id+'.json')
-        csv_path = dir_path/(id+'.csv')
+        json_path = dir_path / (id + '.json')
+        csv_path = dir_path / (id + '.csv')
 
         if not json_path.exists() or not csv_path.exists():
             print("missing file for id %s" % id, file=stderr)

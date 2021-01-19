@@ -1,11 +1,13 @@
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
-from common import load_csvdata, Weibo, Comment
+from matplotlib.dates import DateFormatter, DayLocator
+from common import load_csvdata, Comment
 from functools import reduce
 from pathlib import Path
-from time import struct_time, strptime
+from time import struct_time, strptime, mktime
+from datetime import datetime
 
-group_show = {'对牺牲者的哀悼', '批评红十字会', '批评政府掩盖事实,防控不力'}
+group_show = {'对其它地区的嘲讽,厌恶', '批评政府掩盖事实,防控不力'}
 
 
 def load_kwgroup(path: Path) -> dict[str, set[str]]:
@@ -19,11 +21,6 @@ def load_kwgroup(path: Path) -> dict[str, set[str]]:
                 continue
             groups[split[0]] = set(split[1].strip().split(','))
     return groups
-
-
-def filter_toolate(comments):
-    return filter(lambda c: c.time.tm_year == 2020 and c.time.tm_mon == 2,
-                  comments)
 
 
 def group_by_date(
@@ -62,15 +59,20 @@ def get_groupfreq_by_date(
     return result
 
 
-data = load_csvdata(Path('data/alldata'))
+data = load_csvdata(Path('data/alldata'), strptime('2020 01 01', '%Y %m %d'),
+                    strptime('2020 04 01', '%Y %m %d'))
 groups = load_kwgroup(Path('data/dict.md'))
-groupcount = list(get_groupfreq_by_date(filter_toolate(data), groups))
+groupcount = list(get_groupfreq_by_date(data, groups))
 
 rcParams['font.family'] = 'Noto Sans CJK JP'
 fig, ax = plt.subplots()
+ax.xaxis.set_major_formatter(DateFormatter("%m-%d"))
+ax.xaxis.set_major_locator(DayLocator(interval=5))
 for (key, _) in groups.items():
-    ax.plot(list(map(lambda gc: gc[0].tm_yday, groupcount)),
+    ax.plot(list(
+        map(lambda gc: datetime.fromtimestamp(mktime(gc[0])), groupcount)),
             list(map(lambda gc: gc[1][key], groupcount)),
             label=key)
 ax.legend()
+fig.autofmt_xdate()
 plt.show()
