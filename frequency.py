@@ -7,7 +7,7 @@ from pathlib import Path
 from time import struct_time, strptime, mktime
 from datetime import datetime
 
-group_show = {'对其它地区的嘲讽,厌恶', '批评政府掩盖事实,防控不力'}
+group_show = {'对牺牲者的哀悼', '批评政府掩盖事实,防控不力'}
 
 
 def load_kwgroup(path: Path) -> dict[str, set[str]]:
@@ -59,8 +59,8 @@ def get_groupfreq_by_date(
     return result
 
 
-data = load_csvdata(Path('data/alldata'), strptime('2020 01 01', '%Y %m %d'),
-                    strptime('2020 04 01', '%Y %m %d'))
+data = load_csvdata(Path('data/alldata'), strptime('2020 02 01', '%Y %m %d'),
+                    strptime('2020 03 01', '%Y %m %d'))
 groups = load_kwgroup(Path('data/dict.md'))
 groupcount = list(get_groupfreq_by_date(data, groups))
 
