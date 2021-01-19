@@ -5,9 +5,7 @@ from functools import reduce
 from pathlib import Path
 from time import struct_time, strptime
 
-
-group_show = {
-    '@对外国防控的支持'}
+group_show = {'对牺牲者的哀悼', '批评红十字会', '批评政府掩盖事实,防控不力'}
 
 
 def load_kwgroup(path: Path) -> dict[str, set[str]]:
@@ -24,10 +22,12 @@ def load_kwgroup(path: Path) -> dict[str, set[str]]:
 
 
 def filter_toolate(comments):
-    return filter(lambda c: c.time.tm_year == 2020 and c.time.tm_yday > 60 and c.time.tm_yday < 90, comments)
+    return filter(lambda c: c.time.tm_year == 2020 and c.time.tm_mon == 2,
+                  comments)
 
 
-def group_by_date(comments: list[Comment]) -> list[tuple[struct_time, list[list[str]]]]:
+def group_by_date(
+        comments: list[Comment]) -> list[tuple[struct_time, list[list[str]]]]:
     comments = sorted(comments, key=lambda c: c.time)
     comments.append((strptime('2021 01 01', '%Y %m %d'), []))
     result = []
@@ -44,18 +44,20 @@ def group_by_date(comments: list[Comment]) -> list[tuple[struct_time, list[list[
     return result
 
 
-def get_groupfreq_by_date(comments: list[Comment], groups: dict[str, set[str]]) -> list[tuple[struct_time, dict[str, int]]]:
+def get_groupfreq_by_date(
+        comments: list[Comment],
+        groups: dict[str,
+                     set[str]]) -> list[tuple[struct_time, dict[str, int]]]:
     comments_date = group_by_date(comments)
     result = []
     for (time, comments) in comments_date:
         wordset = list(map(lambda c: set(c), comments))
         group_freq = {}
         for (key, words) in groups.items():
-            count = reduce(lambda prev, comment_words:
-                           prev if comment_words.isdisjoint(words)
-                           else prev+1,
-                           wordset, 0)
-            group_freq[key] = count/max(len(comments), 1)
+            count = reduce(
+                lambda prev, comment_words: prev
+                if comment_words.isdisjoint(words) else prev + 1, wordset, 0)
+            group_freq[key] = count / max(len(comments), 1)
         result.append((time, group_freq))
     return result
 
