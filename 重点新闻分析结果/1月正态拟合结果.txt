@@ -1,0 +1,3 @@
+(0.20411229133605957, 0.0)
+AndersonResult(statistic=257.7272440010495, critical_values=array([0.573, 0.653, 0.784, 0.914, 1.087]), significance_level=array([15. , 10. ,  5. ,  2.5,  1. ]))
+KstestResult(statistic=0.41464445289907326, pvalue=5.741581010626539e-140)
