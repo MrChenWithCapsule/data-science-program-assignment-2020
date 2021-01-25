@@ -11,9 +11,9 @@ url='https://weibo.com/aj/v6/comment/big?id={}&page={}&filter=hot&from=singleWei
 search_url='https://s.weibo.com/weibo?q={}&category=4&suball=1&timescope=custom:{}-0:{}-23&Refer=g&page={}'
 headers={
     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0',
-    'Cookie':'''SINAGLOBAL=9586457965397.959.1598603806172; SCF=AkSgI7SC_aq2QR8nBPk6pPovWpjj8WuEdb0pYiyLNcR8wyZtvdeG2ChOgxEsMg19o7ll0tGU4CD6xSYlY9nbBL0.; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9W5syM4qJC.64UdSy23mbVBU5NHD95QNSKzc1h.R1KecWs4DqcjzH8v0q0z7eh2t; ALF=1638694420; SUB=_2A25yzzq2DeRhGeFL6VQZ-SbFyDqIHXVuMEb-rDV8PUJbkNANLWPgkW1NQlA_DTqvvemc-Y2J2Y8qSF_7iWBrxkaW; UOR=fo.ifeng.com,widget.weibo.com,www.baidu.com; wvr=6; _s_tentry=-; Apache=9222479667857.49.1609311834580; ULV=1609311834672:12:10:3:9222479667857.49.1609311834580:1609135420737; webim_unReadCount=%7B%22time%22%3A1609343373947%2C%22dm_pub_total%22%3A1%2C%22chat_group_client%22%3A0%2C%22chat_group_notice%22%3A0%2C%22allcountNum%22%3A46%2C%22msgbox%22%3A0%7D'''
+    'Cookie':'''***'''
 }
-access_token='2.00kPG5NIlQdZAE8b262bdf81WAD4VD'
+access_token='***'
 def getCommnetsInPage(html):
     if (html==None):
         return []
