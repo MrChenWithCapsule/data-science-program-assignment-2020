@@ -53,10 +53,10 @@ def mid_to_murl(mid):
 
 headers={
     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0',
-    'Cookie':'''SINAGLOBAL=9586457965397.959.1598603806172; SCF=AkSgI7SC_aq2QR8nBPk6pPovWpjj8WuEdb0pYiyLNcR8wyZtvdeG2ChOgxEsMg19o7ll0tGU4CD6xSYlY9nbBL0.; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9W5syM4qJC.64UdSy23mbVBU5NHD95QNSKzc1h.R1KecWs4DqcjzH8v0q0z7eh2t; ALF=1638694420; SUB=_2A25yzzq2DeRhGeFL6VQZ-SbFyDqIHXVuMEb-rDV8PUJbkNANLWPgkW1NQlA_DTqvvemc-Y2J2Y8qSF_7iWBrxkaW; UOR=fo.ifeng.com,widget.weibo.com,www.baidu.com; wvr=6; _s_tentry=-; Apache=9845396151123.875.1608907014991; ULV=1608907015082:9:7:3:9845396151123.875.1608907014991:1608886696531; webim_unReadCount=%7B%22time%22%3A1608979794521%2C%22dm_pub_total%22%3A1%2C%22chat_group_client%22%3A0%2C%22chat_group_notice%22%3A0%2C%22allcountNum%22%3A41%2C%22msgbox%22%3A0%7D'''
+    'Cookie':'''***'''
 }
-access_token='2.00kPG5NI1eK5uDc5946d519aUhiQSE'
-#access_token='2.00kPG5NIlQdZAE8b262bdf81WAD4VD'
+access_token='***'
+#access_token='***'
 url='https://api.weibo.com/2/statuses/count.json?access_token={}&ids={}'
 
 def getCommentsByMid(mid):
